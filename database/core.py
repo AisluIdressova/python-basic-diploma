@@ -1,5 +1,5 @@
-from database.utils.CRUD import CRUDInterface
-from database.common.models import db, User
+from database.CRUD import CRUDInterface
+from database.models import db, User
 
 db.connect()
 db.create_tables([User])

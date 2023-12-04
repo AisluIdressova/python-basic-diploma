@@ -1,4 +1,4 @@
-from setting import SiteSettings
+from config_data.config import SiteSettings
 from site_API.util.site_api_handler import SiteApiInterface
 
 

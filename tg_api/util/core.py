@@ -1,6 +1,6 @@
 import telebot
 
-from setting import SiteSettings
+from config_data.config import SiteSettings
 
 
 bot_token = SiteSettings()
