@@ -1,5 +1,5 @@
 from config_data.config import SiteSettings
-from site_API.util.site_api_handler import SiteApiInterface
+from utils.site_api_handler import SiteApiInterface
 
 
 site = SiteSettings()
