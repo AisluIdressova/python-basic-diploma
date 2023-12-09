@@ -1,11 +1,11 @@
-Название проекта - pythonProject_bot
+Название проекта - python_basi_diploma
 
 =====Содержание=====
 
 ----1.Установка----
 
 Для использования бота нужно перейти на https://web.telegram.org/ 
-Найти бот @AirportCityFinderBot
+Найти бот @FlightCityAirportbot
 
 ----2.Требования----
 
@@ -23,61 +23,81 @@ API запрос был сделан на сайте https://travel-advisor.p.ra
 
 Содержание проекта:
 
-<<<<<1.DIR database >>>>>
-== директория для работы с базой данных Sqlite3 ==
-          ---- содержание ----
-                <<<<DIR: 1.common>>>>
-                     ---- содержание ----
-                          <<<<FILE: 1.models.py>>>>
+<<<<<1.CONFIG_DATA >>>>>
+               <<<<FILE: 1.config.py>>>>
+                    ===  Загружает SITE_API, HOST_API, TOKEN из .env файла ===
+                    === Создает соманды по умолчанию ===
+
+<<<<<2.DATABASE >>>>>
+== пакет для работы с базой данных Sqlite3 ==
+               <<<<FILE: 1.models.py>>>>
                           ===Используя ORM peewee создана базовая модель и таблица User, 
                           состоящее из полей ID, MESSAGE, DATE
-                <<<<DIR: 2.utils>>>>
-                     ---- содержание ----
-                          <<<<FILE: 1.CRUD.py>>>>
+          
+                <<<<FILE: 1.CRUD.py>>>>
                           ===Создан CRUDInterface для выполнения методов create and retrieve c 
                           таблицей User.
+
                 <<<<FILE: 3.core.py>>>>
                           ===Соединение к базе данных database.db и создание таблицы User
-<<<<<2.DIR site_API >>>>>
-== директория для работы с API запросами  ==
-          ---- содержание ----
-                <<<<DIR: 1.util>>>>
-                     ---- содержание ----
-                          <<<<FILE: 1.site_api_handler.py>>>>
-                          ===Создан SiteApiInterface для отправления и обработки API запросов. 
-                <<<<FILE: 3.core.py>>>>
-                          ===Сохранены данные для отправления запросов: URL, QUERYSTRING, HEADERS, 
-                          API-KEY и API-HOST в зашированном виде
-<<<<<3.DIR tg_api>>>>>
-== директория для управления телеграм ботом  ==
-          ---- содержание ----
-                <<<<DIR: 1.util>>>>
-                     ---- содержание ----
-                          <<<<FILE: 1.сore.py>>>>
-                          ===Подключение к телеграм боту через зашифрованный токен
-<<<<<4.FILE main.py>>>>>
-== файл для запуска программы ==
-Содержит message_handlers:
-1 ---- @bot.message_handler(commands=['start'])  - отвечает приветствием,
-       добавлен replykeyboard и 3 кнопки:
-                                 1-кнопка. Отправляет текст Привет
-                                 2-кнопка. Спрашивает номер телефона
-                                 3-кнопка. Спрашивает геолокацию
-       После этого вызывается следующий обработчик 
-       2 ------- bot.register_next_step_handler(message, on_click) - содержит InlineKeyboardMarkUp
+
+
+
+<<<<<3.HANDLERS >>>>>
+== пакет содержащий обработчиков сообщении  ==
+           <<<<DEFAULT_HANDLERS>>>>
+               <<<<FILE: start.py>>>>
+                          === обрабатывает команду по умолчанию start и меняет состояние пользователя на said_hello.
+               <<<<FILE: help.py>>>>
+                          === обрабатывает команду по умолчанию help.
+               <<<<FILE: echo.py>>>>
+                          === обрабатывает неизвестные сообщения и когда состояние неизвестное.
+          <<<<CUSTOM_HANDLERS>>>>
+               <<<<FILE: on_click.py>>>>
+                          === обрабатывает сообщения после команды start,состояние said_hello, содержит inlinekeyboard c callback_data: search and lookup
+               <<<<FILE: callback_search.py>>>>
+                          === меняет состояние пользователя на  flight_search и спрашивает город
+               <<<<FILE: api_request.py>>>>
+                          === обрабатывает состояние flight_search и отправляет запрос на сайт https://travel-advisor.p.rapidapi.com
+               <<<<FILE: callback_lookup.py>>>>
+                          === обрабатывает call.data: search и показывает содержимое таблицы User
+
+
+
+<<<<4.KEYBOARDS>>>>>
+          <<<<INLINE>>>>
+                    <<<<inline_keyb.py>>>>
+                          ====cодержит InlineKeyboardMarkUp
                    про возможности бота, состоит из 2 кнопок:
                                  1-кнопка. Отбраысвает на следующий обработчик с call.data == 'search'
                                  2-кнопка. Отбраысвает на следующий обработчик с call.data == 'lookup'
-3 ---- @bot.callback_query_handler(func=lambda call: call.data == 'search')
-       Отвечает - "Напишите название города"
-4 ---- @bot.message_handler(func=lambda message: True)   - все следующие сообщение обрабатываются здесь
-       Отправляет API запрос и проверяет результат
-       Затем сохраняет этот запрос в таблицу USER из базы данных
-       В конце выводит результат запроса, если запрос был правильный, иначе выводит надпись об ошибке
-5 ---- @bot.callback_query_handler(func=lambda call: call.data == 'lookup')
-       Отправляет информацию о запросах из таблицы User в базе данных
+          <<<<REPLY>>>>
+                    <<<<start_reply.py>>>>
+                          ===Добавлен replykeyboard и 3 кнопки:
+                                 1-кнопка. Отправляет текст Привет
+                                 2-кнопка. Спрашивает номер телефона
+                                 3-кнопка. Спрашивает геолокацию
 
-<<<<<5.FILE setting>>>>>
-== Импортирует SITE_API, HOST_API, TOKEN из .env файла ==
-                
 
+
+<<<<<5.STATES>>>>>
+          <<<<core.py>>>>
+           ===Создание состоянии и памяти для состоянии
+
+
+
+<<<<<6.UTILS >>>>>
+          <<<<FILE: core.py>>>>
+               === Содержит данные для отправления запросов: URL, QUERYSTRING, HEADERS, API-KEY и API-HOST в зашированном виде
+          <<<<FILE: site_api_handler.py>>>>
+                          === Создан SiteApiInterface для отправления и обработки API запросов. 
+          <<<<FILE: default_commands.py>>>>
+                          === содержит функцию которая добавляет боту команды по умолчанию
+<<<<7.FILE: LOADER.PY>>>>
+          === создает бот
+
+
+<<<<<8.FILE MAIN.PY>>>>>
+== файл для запуска программы ==
+
+      
