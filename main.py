@@ -1,7 +1,7 @@
 from loader import bot
 
-from handlers.default_handlers import start, echo, help
-from handlers.custom_handlers import callback_lookup, callback_search, on_click, api_request
+from handlers.default_handlers import start
+from handlers.custom_handlers import on_click
 from utils.default_commands import set_default_commands
 from keyboards import inline, reply
 from states.core import MyStates, storage
