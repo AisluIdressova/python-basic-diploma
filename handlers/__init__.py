@@ -1,4 +1,3 @@
-from . import default_handlers
-from . import custom_handlers
+from .custom_handlers import *
 
-__all__ = ['default_handlers', 'custom_handlers']
+from .default_handlers import *
