@@ -2,11 +2,11 @@ import telebot
 
 from config_data.config import SiteSettings
 
+from states.core import storage
 
-from telebot.storage import StateMemoryStorage
 from config_data import config
 
-storage = StateMemoryStorage()
+
 
 
 

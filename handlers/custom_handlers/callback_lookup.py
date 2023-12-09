@@ -13,3 +13,7 @@ def retrieving_info(callback):
     result = show_info(db, User)
     bot.set_state(callback.message.from_user.id, MyStates.looked_up, callback.message.chat.id)
     bot.reply_to(callback.message, result)
+
+
+if __name__ == '__main__':
+    retrieving_info()

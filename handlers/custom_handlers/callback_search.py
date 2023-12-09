@@ -8,3 +8,7 @@ def searching_airport(callback):
                           text='Выберите действие', reply_markup=None)
     bot.set_state(callback.message.from_user.id, MyStates.flight_search, callback.message.chat.id)
     bot.reply_to(callback.message, 'Напишите название города')
+
+
+if __name__ == '__main__':
+    searching_airport()

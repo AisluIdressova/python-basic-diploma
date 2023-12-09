@@ -23,3 +23,6 @@ def api_request(message):
     current_time = now.strftime("%H-%M-%S  %d/%m/%Y")
     data = [{'message': message.text, 'date': current_time}]
     db_write(db, User, *data)
+
+if __name__ == '__main__':
+    api_request()

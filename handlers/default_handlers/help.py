@@ -1,10 +1,13 @@
 from telebot.types import Message
 
 from config_data.config import DEFAULT_COMMANDS
-from tg_api.util.core import bot
+from loader import bot
 
 
 @bot.message_handler(commands=["help"])
 def bot_help(message: Message):
     text = [f"/{command} - {desk}" for command, desk in DEFAULT_COMMANDS]
     bot.reply_to(message, "\n".join(text))
+
+if __name__ == '__main__':
+    bot_help()
