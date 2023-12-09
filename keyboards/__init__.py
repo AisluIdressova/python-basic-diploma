@@ -1,3 +1,3 @@
-from .reply import *
+from .reply import start_reply
 
-from .inline import *
+from .inline import inline_keyb
