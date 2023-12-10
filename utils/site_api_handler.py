@@ -29,7 +29,7 @@ def _make_response(url: str, headers: Dict, querystring: Dict,
 
 
 def _airport_data(url: str, headers: Dict, querystring: Dict, city: str, func=_make_response):
-    response = func(url, headers, querystring, city, 10)
+    response = func(url, headers, querystring, city, 20)
 
     return response
 

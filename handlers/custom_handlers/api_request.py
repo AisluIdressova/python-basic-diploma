@@ -8,6 +8,7 @@ from database.models import User, db
 from datetime import datetime
 from database.core import crud
 
+from keyboards import next_reply
 
 @bot.message_handler(state=MyStates.flight_search)
 def make_request(message):
@@ -15,6 +16,7 @@ def make_request(message):
         bot.reply_to(message, 'Хорошо. Продолжайте вводить города')
     elif message.text in ['Да', 'да', 'ДА']:
         bot.set_state(message.from_user.id, MyStates.said_hello, message.chat.id)
+        bot.send_message(message.chat.id, 'Нажмите "Продолжить"', reply_markup=next_reply)
     else:
         check_api = site_api.get_info()
         result = check_api(url, headers, querystring, message.text)

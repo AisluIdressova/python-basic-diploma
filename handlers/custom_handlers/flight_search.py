@@ -6,7 +6,6 @@ from telebot import types
 def make_state_flight_search(message):
     bot.set_state(message.from_user.id, MyStates.flight_search, message.chat.id)
     bot.send_message(message.chat.id, 'Напишите название города', reply_markup=types.ReplyKeyboardRemove())
-    print('asking_city', bot.get_state(message.from_user.id, message.chat.id))
 
 
 if __name__ == '__main__':

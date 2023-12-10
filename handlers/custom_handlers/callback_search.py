@@ -6,8 +6,9 @@ from keyboards import next_reply
 @bot.callback_query_handler(func=lambda call: call.data == 'search')
 def searching_airport(callback):
     bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                          text='Пример запроса\nГород: Москва', reply_markup=None)
-    bot.send_message(callback.message.chat.id, 'Шеремьетево', reply_markup=next_reply)
+                          text='Пример запроса\nАлматы', reply_markup=None)
+    bot.send_message(callback.message.chat.id, 'Международный аэропорт Алматы,\n'
+                                               'Казахстан (ALA Алматы)', reply_markup=next_reply)
     bot.register_next_step_handler(callback.message, make_state_flight_search)
 
 
