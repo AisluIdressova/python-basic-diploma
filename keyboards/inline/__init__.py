@@ -1,1 +1,1 @@
-from . import inline_keyb
+from .inline_keyb import inline_markup
