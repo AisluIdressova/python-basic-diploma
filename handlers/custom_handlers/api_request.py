@@ -1,7 +1,5 @@
 from states.core import MyStates
 
-from loader import bot
-
 from utils.core import site_api, url, headers, querystring
 from loader import bot
 from database.models import User, db
